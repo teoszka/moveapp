@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1B2A4A">
+<title>MoveApp audio test</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<style>
+  :root {
+    --navy: #1B2A4A; --raised: #293755; --line: rgba(255,255,255,.12);
+    --ink: #fff; --ink-2: rgba(255,255,255,.6); --sky: #93c5fd; --green: #34d399; --red: #fca5a5;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--navy); color: var(--ink); font: 16px/1.5 'Segoe UI', system-ui, sans-serif; }
+  main { max-width: 560px; margin: 0 auto; padding: 20px 16px 48px; }
+  h1 { font-size: 1.25rem; margin: 0 0 4px; }
+  h2 { font-size: .75rem; letter-spacing: 1.6px; text-transform: uppercase; color: var(--ink-2); margin: 28px 0 8px; }
+  p, li { color: var(--ink-2); }
+  .stage { background: var(--raised); border-radius: 24px; padding: 28px 20px; text-align: center; user-select: none; }
+  .chapter { font-size: 2.4rem; font-weight: 800; line-height: 1.1; }
+  .clock { font-size: 1.1rem; color: var(--sky); margin-top: 6px; font-variant-numeric: tabular-nums; }
+  .state { margin-top: 10px; color: var(--ink-2); font-size: .9rem; }
+  button { font: inherit; border: 0; border-radius: 999px; cursor: pointer; }
+  .primary { background: #fff; color: var(--navy); font-weight: 700; padding: 14px 28px; margin-top: 18px; }
+  .ghost { background: rgba(255,255,255,.1); color: var(--ink); padding: 8px 14px; font-size: .9rem; }
+  .row { display: flex; gap: 8px; flex-wrap: wrap; }
+  ol { padding-left: 20px; margin: 0; }
+  li { margin: 6px 0; }
+  .checks { list-style: none; padding: 0; }
+  .checks li { display: flex; gap: 10px; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); padding: 8px 0; margin: 0; color: var(--ink); }
+  .mark { min-width: 52px; padding: 6px 10px; background: rgba(255,255,255,.1); color: var(--ink-2); }
+  .mark[data-v="yes"] { background: #064e3b; color: var(--green); }
+  .mark[data-v="no"] { background: #451a1f; color: var(--red); }
+  .stats { font-size: .85rem; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+  pre { background: rgba(0,0,0,.25); border-radius: 12px; padding: 12px; font-size: .72rem; line-height: 1.45; max-height: 320px; overflow: auto; white-space: pre-wrap; word-break: break-word; }
+</style>
+</head>
+<body>
+<main>
+  <h1>MoveApp: test dźwięku w tle</h1>
+  <p>Sprawdza, czy Chrome na Androidzie gra przy zgaszonym ekranie i czy działają przyciski na ekranie blokady i w zegarku. Ścieżka: 10 rozdziałów po minucie.</p>
+
+  <div class="stage" id="stage">
+    <div class="chapter" id="chapter">Gotowe</div>
+    <div class="clock" id="clock">0:00 / 1:00</div>
+    <div class="state" id="state">Dotknij Start. Potem dotknięcie tego pola to pauza i wznowienie.</div>
+    <button class="primary" id="start">Start</button>
+  </div>
+
+  <h2>Jak testować (ok. 15 min)</h2>
+  <ol>
+    <li>Odłącz telefon od ładowarki. Dotknij Start i poczekaj na „Chapter one”.</li>
+    <li>Zablokuj ekran. Na ekranie blokady powinien być odtwarzacz z tytułem „Chapter 1 of 10”. Naciśnij pauzę, potem play (powinno paść „Resuming”), potem „następny”.</li>
+    <li>Na Pixel Watch otwórz sterowanie multimediami. Pauza, play, następny i poprzedni.</li>
+    <li>Zostaw zablokowany telefon na co najmniej 6 minut (Chrome mocniej dławi strony po 5 minutach w tle). Czy dźwięk gra dalej i czy tytuł na ekranie blokady zmienia się co rozdział?</li>
+    <li>Odblokuj, zaznacz wyniki niżej i dotknij „Kopiuj wyniki”.</li>
+    <li>Instalacja: menu Chrome → „Dodaj do ekranu głównego”. Włącz tryb samolotowy, otwórz ikonę „Audio test”, Start.</li>
+  </ol>
+
+  <h2>Wyniki</h2>
+  <ul class="checks" id="checks"></ul>
+  <p class="stats" id="stats"></p>
+  <div class="row">
+    <button class="ghost" id="copy">Kopiuj wyniki</button>
+    <button class="ghost" id="share">Udostępnij</button>
+    <button class="ghost" id="clear">Wyczyść log</button>
+  </div>
+
+  <h2>Log zdarzeń</h2>
+  <pre id="log"></pre>
+</main>
+
+<script>
+const CH = 10, CH_LEN = 60;
+const LOG_KEY = 'moveapp-audio-test-log', CHECK_KEY = 'moveapp-audio-test-checks', CACHE = 'audio-test-v1';
+const CHECKS = [
+  ['bg', 'Gra dalej przy zgaszonym ekranie (6+ min, bez kabla)'],
+  ['lock', 'Ekran blokady pokazuje odtwarzacz z tytułem rozdziału'],
+  ['title', 'Tytuł na ekranie blokady zmienia się co rozdział'],
+  ['lockpp', 'Ekran blokady: pauza i play działają'],
+  ['locknext', 'Ekran blokady: następny i poprzedni działają'],
+  ['watch', 'Zegarek pokazuje sterowanie'],
+  ['watchpp', 'Zegarek: pauza i play działają'],
+  ['watchnext', 'Zegarek: następny i poprzedni działają'],
+  ['resume', 'Po wznowieniu z blokady lub zegarka słychać „Resuming”'],
+  ['install', 'Instaluje się na ekranie głównym i gra z ikony'],
+  ['offline', 'Gra w trybie samolotowym (z ikony)'],
+];
+const $ = id => document.getElementById(id);
+const audio = new Audio();
+const resumeClip = new Audio();
+const ms = navigator.mediaSession;
+
+let started = false, lastChapter = -1, lastTU = 0, maxGapHidden = 0, maxGapVisible = 0;
+let anchor = null, pendingSeek = null, resumePending = false;
+
+const store = {
+  get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
+};
+let entries = store.get(LOG_KEY, []);
+let checks = store.get(CHECK_KEY, {});
+
+function log(type, detail = '') {
+  entries.push({ at: new Date().toISOString().slice(11, 23), h: document.hidden ? 'H' : 'V', ct: audio.currentTime.toFixed(2), type, detail: String(detail) });
+  if (entries.length > 2000) entries.shift();
+  store.set(LOG_KEY, entries);
+  if (!document.hidden) renderLog();
+}
+function renderLog() {
+  $('log').textContent = entries.slice(-80).reverse().map(e => `${e.at} ${e.h} ${e.ct.padStart(7)}  ${e.type} ${e.detail}`).join('\n');
+  $('stats').textContent = `Najdłuższa przerwa między zdarzeniami timeupdate: w tle ${maxGapHidden.toFixed(1)} s, na wierzchu ${maxGapVisible.toFixed(1)} s. Zainstalowana: ${standalone() ? 'tak' : 'nie'}.`;
+}
+function standalone() { return matchMedia('(display-mode: standalone)').matches; }
+
+const chapterOf = t => Math.min(CH - 1, Math.floor(t / CH_LEN));
+const fmt = s => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+
+function updateUI() {
+  const t = audio.currentTime, ch = chapterOf(t);
+  $('chapter').textContent = `Chapter ${ch + 1} / ${CH}`;
+  $('clock').textContent = `${fmt(t - ch * CH_LEN)} / 1:00  ·  całość ${fmt(t)} / 10:00`;
+  $('state').textContent = resumePending ? 'Wznawiam…' : audio.paused ? 'Pauza. Dotknij, aby wznowić.' : 'Gra. Dotknij, aby zatrzymać.';
+}
+
+function setMeta(ch) {
+  if (!ms) return;
+  ms.metadata = new MediaMetadata({
+    title: `Chapter ${ch + 1} of ${CH}`, artist: 'MoveApp audio test', album: 'Lab',
+    artwork: [{ src: 'icon-512.png', sizes: '512x512', type: 'image/png' }, { src: 'icon-192.png', sizes: '192x192', type: 'image/png' }],
+  });
+}
+function setPos() {
+  if (!ms || !ms.setPositionState) return;
+  const ch = chapterOf(audio.currentTime);
+  const position = Math.min(CH_LEN, Math.max(0, audio.currentTime - ch * CH_LEN));
+  try { ms.setPositionState({ duration: CH_LEN, playbackRate: 1, position }); } catch (e) { log('pos-error', e.message); }
+}
+function drift() {
+  if (!anchor) return 'n/a';
+  return (((performance.now() - anchor.wall) / 1000) - (audio.currentTime - anchor.media)).toFixed(2) + ' s';
+}
+
+function playMain(source) {
+  audio.play().then(() => log('main-play', `ok (${source})`)).catch(e => log('main-play-fail', `${e.name}: ${e.message}`));
+}
+function pause(source) {
+  resumePending = false;
+  resumeClip.pause();
+  audio.pause();
+  log('pause', source);
+  updateUI();
+}
+function resume(source) {
+  if (!audio.paused || resumePending) return;
+  resumePending = true;
+  updateUI();
+  resumeClip.currentTime = 0;
+  resumeClip.play()
+    .then(() => log('resume-clip', `playing (${source})`))
+    .catch(e => { log('resume-clip-fail', `${e.name}: ${e.message}`); resumePending = false; playMain(source); });
+  resumeClip.onended = () => { log('resume-clip', 'ended'); if (resumePending) { resumePending = false; playMain(source); } };
+}
+function seekTo(target) {
+  target = Math.max(0, Math.min(CH * CH_LEN - 0.5, target));
+  pendingSeek = target;
+  audio.currentTime = target;
+}
+function seekChapter(dir) {
+  const t = audio.currentTime, ch = chapterOf(t);
+  if (dir < 0 && t - ch * CH_LEN > 3) return seekTo(ch * CH_LEN);
+  seekTo(Math.max(0, Math.min(CH - 1, ch + dir)) * CH_LEN);
+}
+
+function setupMediaSession() {
+  if (!ms) { log('no-media-session'); return; }
+  const handlers = {
+    play: () => { log('ms-action', 'play'); resume('media-session'); },
+    pause: () => { log('ms-action', 'pause'); pause('media-session'); },
+    nexttrack: () => { log('ms-action', 'nexttrack'); seekChapter(1); },
+    previoustrack: () => { log('ms-action', 'previoustrack'); seekChapter(-1); },
+    seekto: d => { log('ms-action', `seekto ${d.seekTime?.toFixed(1)}`); seekTo(chapterOf(audio.currentTime) * CH_LEN + d.seekTime); },
+    stop: () => { log('ms-action', 'stop'); pause('stop'); },
+  };
+  for (const [action, fn] of Object.entries(handlers)) {
+    try { ms.setActionHandler(action, fn); } catch { log('handler-unsupported', action); }
+  }
+}
+
+async function start() {
+  if (started) return;
+  started = true;
+  $('start').hidden = true;
+  $('state').textContent = 'Ładuję ścieżkę…';
+  log('start', `${navigator.userAgent} | installed=${standalone()} | online=${navigator.onLine}`);
+  try {
+    const [track, clip] = await Promise.all(['track.mp3', 'resume.mp3'].map(u => fetch(u).then(r => r.blob())));
+    audio.src = URL.createObjectURL(track);
+    resumeClip.src = URL.createObjectURL(clip);
+    log('loaded', `track ${track.size} B, resume ${clip.size} B`);
+  } catch (e) {
+    log('load-fail', e.message);
+    $('state').textContent = 'Nie udało się wczytać ścieżki.';
+    started = false; $('start').hidden = false;
+    return;
+  }
+  setupMediaSession();
+  setMeta(0);
+  playMain('start');
+}
+
+for (const ev of ['play', 'playing', 'pause', 'ended', 'waiting', 'stalled', 'error']) {
+  audio.addEventListener(ev, () => {
+    if (ev === 'playing') { anchor = { wall: performance.now(), media: audio.currentTime }; lastTU = 0; setPos(); }
+    if (ev === 'pause') { lastTU = 0; anchor = null; }
+    if (ms) ms.playbackState = ev === 'pause' ? 'paused' : (ev === 'playing' ? 'playing' : ms.playbackState);
+    log('audio', ev === 'error' ? `error ${audio.error?.code}` : ev);
+    updateUI();
+  });
+}
+audio.addEventListener('seeking', () => { lastTU = 0; anchor = null; });
+audio.addEventListener('seeked', () => {
+  if (pendingSeek !== null) log('seeked', `target ${pendingSeek.toFixed(2)} got ${audio.currentTime.toFixed(2)}`);
+  pendingSeek = null;
+  anchor = audio.paused ? null : { wall: performance.now(), media: audio.currentTime };
+  const ch = chapterOf(audio.currentTime);
+  if (ch !== lastChapter) { lastChapter = ch; setMeta(ch); log('chapter', `${ch + 1} (seek)`); }
+  setPos();
+  updateUI();
+});
+audio.addEventListener('timeupdate', () => {
+  const now = performance.now();
+  if (lastTU && !audio.paused) {
+    const gap = (now - lastTU) / 1000;
+    if (document.hidden) maxGapHidden = Math.max(maxGapHidden, gap); else maxGapVisible = Math.max(maxGapVisible, gap);
+    if (gap > 1.5) log('tu-gap', `${gap.toFixed(1)} s`);
+  }
+  lastTU = now;
+  const ch = chapterOf(audio.currentTime);
+  if (ch !== lastChapter) { lastChapter = ch; setMeta(ch); setPos(); log('chapter', `${ch + 1}, drift ${drift()}`); }
+  if (!document.hidden) updateUI();
+});
+
+document.addEventListener('visibilitychange', () => { log('visibility', document.hidden ? 'hidden' : `visible, max gap hidden ${maxGapHidden.toFixed(1)} s`); if (!document.hidden) { renderLog(); updateUI(); } });
+document.addEventListener('freeze', () => log('lifecycle', 'freeze'));
+document.addEventListener('resume', () => log('lifecycle', 'resume'));
+addEventListener('pagehide', () => log('lifecycle', 'pagehide'));
+addEventListener('pageshow', e => log('lifecycle', `pageshow persisted=${e.persisted}`));
+addEventListener('online', () => log('net', 'online'));
+addEventListener('offline', () => log('net', 'offline'));
+
+$('start').addEventListener('click', e => { e.stopPropagation(); start(); });
+$('stage').addEventListener('click', () => { if (!started) return; audio.paused && !resumePending ? resume('tap') : pause('tap'); });
+
+function renderChecks() {
+  $('checks').innerHTML = '';
+  for (const [id, text] of CHECKS) {
+    const li = document.createElement('li');
+    const label = document.createElement('span');
+    label.textContent = text;
+    const b = document.createElement('button');
+    b.className = 'mark';
+    b.dataset.v = checks[id] || '';
+    b.textContent = { yes: 'tak', no: 'nie' }[checks[id]] || '–';
+    b.addEventListener('click', () => {
+      checks[id] = { '': 'yes', yes: 'no', no: '' }[checks[id] || ''];
+      store.set(CHECK_KEY, checks);
+      renderChecks();
+    });
+    li.append(label, b);
+    $('checks').append(li);
+  }
+}
+function report() {
+  const lines = CHECKS.map(([id, text]) => `${({ yes: 'TAK', no: 'NIE' })[checks[id]] || '  ?'}  ${text}`);
+  return [`MoveApp audio test, ${new Date().toISOString()}`, navigator.userAgent, `installed=${standalone()}`, '', ...lines, '',
+    $('stats').textContent, '', ...entries.slice(-400).map(e => `${e.at} ${e.h} ${e.ct}  ${e.type} ${e.detail}`)].join('\n');
+}
+$('copy').addEventListener('click', async () => {
+  try { await navigator.clipboard.writeText(report()); $('copy').textContent = 'Skopiowane'; }
+  catch { $('log').textContent = report(); $('copy').textContent = 'Zaznacz log i skopiuj ręcznie'; }
+});
+$('share').addEventListener('click', () => {
+  if (navigator.share) navigator.share({ title: 'MoveApp audio test', text: report() }).catch(() => {});
+  else $('share').textContent = 'Brak udostępniania';
+});
+$('clear').addEventListener('click', () => { entries = []; store.set(LOG_KEY, entries); renderLog(); });
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').then(() => log('sw', 'registered')).catch(e => log('sw-fail', e.message));
+}
+renderChecks();
+renderLog();
+</script>
+</body>
+</html>
