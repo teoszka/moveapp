@@ -1,0 +1,18 @@
+{
+  "box": {
+    "label": "Box breathing 4-4-4-4",
+    "phases": [
+      { "kind": "in", "seconds": 4, "prompt": "Breathe in." },
+      { "kind": "hold", "seconds": 4, "prompt": "And hold." },
+      { "kind": "out", "seconds": 4, "prompt": "Breathe out." },
+      { "kind": "hold", "seconds": 4, "prompt": "And hold." }
+    ]
+  },
+  "fold": {
+    "label": "In 4 s folding forward, out 6 s coming up",
+    "phases": [
+      { "kind": "in", "seconds": 4, "prompt": "Breathe in, fold forward." },
+      { "kind": "out", "seconds": 6, "prompt": "Breathe out, come up." }
+    ]
+  }
+}

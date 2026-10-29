@@ -1,0 +1,7 @@
+{
+  "engine": "chatterbox-tts==0.1.7",
+  "reference": "local:mateusz-en",
+  "energize": { "exaggeration": 0.4, "cfg_weight": 0.5, "temperature": 0.7, "tempo": 1.0 },
+  "wind-down": { "exaggeration": 0.3, "cfg_weight": 0.3, "temperature": 0.6, "tempo": 0.95 },
+  "takes": {}
+}

@@ -1,0 +1,120 @@
+/* Braindock — generated from tokens.json */
+/* Copied from the Braindock design system on 2026-10-17. Don't edit by hand: change the design system, then copy its tokens again. */
+:root, [data-theme="dark"] {
+  --navy: #1B2A4A;
+  --green: #10b981;
+  --blue: #3b82f6;
+  --white: #ffffff;
+  --sky: #93c5fd;
+  --surface: var(--navy);
+  --surface-raised: #293755;
+  --line: rgba(255, 255, 255, 0.12);
+  --ink: var(--white);
+  --ink-heading: #ffffff;
+  --ink-2: rgba(255, 255, 255, 0.6);
+  --ink-muted: rgba(255, 255, 255, 0.55);
+  --accent: var(--sky);
+  --on-accent: var(--navy);
+  --action: #ffffff;
+  --on-action: var(--navy);
+  --action-hover: rgba(255, 255, 255, 0.9);
+  --ghost-fill: rgba(255, 255, 255, 0.1);
+  --ghost-line: rgba(255, 255, 255, 0.25);
+  --focus: var(--sky);
+  --neutral-soft: rgba(255, 255, 255, 0.1);
+  --neutral: #ffffff;
+  --info: #60a5fa;
+  --info-soft: #1e3a5f;
+  --success: #34d399;
+  --success-soft: #064e3b;
+  --success-line: var(--success);
+  --danger: #fca5a5;
+  --danger-soft: #451a1f;
+  --danger-line: var(--danger);
+  --live: #4ade80;
+  --shadow-card: none;
+}
+[data-theme="light"] {
+  --surface: #f8fafc;
+  --surface-raised: #ffffff;
+  --line: #e2e8f0;
+  --ink: #1a202c;
+  --ink-heading: var(--navy);
+  --ink-2: #475569;
+  --ink-muted: #64748b;
+  --accent: #2563eb;
+  --on-accent: #ffffff;
+  --action: var(--navy);
+  --on-action: #ffffff;
+  --action-hover: #0f1f38;
+  --ghost-fill: #ffffff;
+  --ghost-line: #bfdbfe;
+  --focus: #2563eb;
+  --neutral-soft: #f1f5f9;
+  --neutral: #475569;
+  --info: #2563eb;
+  --info-soft: #eff6ff;
+  --success: #166534;
+  --success-soft: #f0fdf4;
+  --success-line: #86efac;
+  --danger: #dc2626;
+  --danger-soft: #fff1f2;
+  --danger-line: #fca5a5;
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.07), 0 4px 14px rgba(0, 0, 0, 0.04);
+}
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-16: 64px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+  --radius-pill: 999px;
+  --kv-logo-block: 0.9;
+  --kv-wordmark-opacity: 0.5;
+  --kv-subtitle-opacity: 0.6;
+  --kv-tagline-opacity: 0.35;
+  --kv-url-opacity: 0.3;
+  --kv-divider-opacity: 0.12;
+  --kv-motif-min: 0.03;
+  --kv-motif-max: 0.07;
+  --content-width: 780px;
+  --nav-height: 52px;
+  --kv-width: 1200px;
+  --kv-height: 630px;
+  --kv-margin: 64px;
+  --kv-divider-width: 440px;
+  --font-sans: 'Segoe UI', system-ui, sans-serif;
+  --font-video: "Saira", "Segoe UI", sans-serif;
+}
+.kv-headline { font-family: var(--font-sans); font-size: 86px; font-weight: 700; letter-spacing: -1px; }
+.kv-subtitle { font-family: var(--font-sans); font-size: 34px; font-weight: 400; }
+.kv-tagline { font-family: var(--font-sans); font-size: 22px; font-weight: 400; }
+.kv-url { font-family: var(--font-sans); font-size: 18px; font-weight: 400; letter-spacing: 0.3px; }
+.kv-wordmark { font-family: var(--font-sans); font-size: 17px; font-weight: 500; letter-spacing: 0.5px; }
+.display { font-family: var(--font-sans); font-size: 3.2rem; line-height: 1.1; font-weight: 900; letter-spacing: -0.5px; }
+.heading { font-family: var(--font-sans); font-size: 2rem; line-height: 1.2; font-weight: 900; letter-spacing: -0.3px; }
+.title { font-family: var(--font-sans); font-size: 1rem; line-height: 1.4; font-weight: 800; }
+.lead { font-family: var(--font-sans); font-size: 1rem; line-height: 1.75; font-weight: 400; }
+.body { font-family: var(--font-sans); font-size: 1rem; line-height: 1.65; font-weight: 400; }
+.small { font-family: var(--font-sans); font-size: 0.87rem; line-height: 1.65; font-weight: 400; }
+.label { font-family: var(--font-sans); font-size: 0.72rem; line-height: 1.4; font-weight: 800; letter-spacing: 1.8px; }
+.vt-day-number { font-family: var(--font-video); font-size: 250px; line-height: 1; font-weight: 100; letter-spacing: 0.02em; }
+.vt-intro-title { font-family: var(--font-video); font-size: 96px; line-height: 1.1; font-weight: 200; letter-spacing: 0.32em; }
+.vt-outro-title { font-family: var(--font-video); font-size: 64px; line-height: 1.1; font-weight: 200; letter-spacing: 0.4em; }
+.vt-title { font-family: var(--font-video); font-size: 60px; line-height: 1.1; font-weight: 300; letter-spacing: 0.22em; }
+.vt-signature { font-family: var(--font-video); font-size: 58px; line-height: 1.1; font-weight: 200; letter-spacing: 0.55em; }
+.vt-figure { font-family: var(--font-video); font-size: 56px; line-height: 1.1; font-weight: 200; letter-spacing: 0.12em; }
+.vt-statement { font-family: var(--font-video); font-size: 44px; line-height: 1.2; font-weight: 250; letter-spacing: 0.16em; }
+.vt-lower-third { font-family: var(--font-video); font-size: 40px; line-height: 1.15; font-weight: 300; letter-spacing: 0.42em; }
+.vt-log { font-family: var(--font-video); font-size: 28px; font-weight: 400; letter-spacing: 0.02em; }
+.vt-sub { font-family: var(--font-video); font-size: 26px; font-weight: 300; letter-spacing: 0.04em; }
+.vt-body { font-family: var(--font-video); font-size: 19px; line-height: 1.5; font-weight: 300; }
+.vt-kicker { font-family: var(--font-video); font-size: 14px; font-weight: 400; letter-spacing: 0.34em; }
+.vt-caption { font-family: var(--font-video); font-size: 11px; font-weight: 400; letter-spacing: 0.3em; }

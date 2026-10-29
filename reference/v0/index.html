@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f1115">
+<meta name="description" content="Poranna i wieczorna rutyna mobilności z animacjami, timerem i polskim głosem.">
+<title>MoveApp</title>
+<style>
+  :root {
+    --bg: #0f1115; --surface: #181b22; --surface-2: #22262f; --line: #2b303b;
+    --fg: #eef0f4; --dim: #9aa1ad; --far: #5f6675; --accent: #f5a524;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
+  [hidden] { display: none !important; }
+  button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+  a { color: var(--accent); }
+  svg.i { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  .screen { max-width: 480px; margin: 0 auto; padding: 16px 16px calc(24px + env(safe-area-inset-bottom)); }
+  h1 { font-size: 28px; line-height: 1.2; margin: 8px 0 4px; letter-spacing: -0.01em; }
+  .sub { color: var(--dim); margin: 0 0 20px; }
+  .topbar { display: flex; align-items: center; gap: 8px; min-height: 44px; }
+  .icon-btn { width: 44px; height: 44px; flex: none; display: grid; place-items: center; border-radius: 12px; }
+  .icon-btn:active { background: var(--surface-2); }
+
+  /* Home */
+  .card { display: flex; gap: 14px; align-items: center; width: 100%; text-align: left; padding: 18px 16px; margin-bottom: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; }
+  .card:active { transform: scale(0.98); }
+  .card-icon { flex: none; width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center; color: var(--accent); background: color-mix(in srgb, var(--accent) 16%, transparent); }
+  .card-icon svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .card-body { display: grid; gap: 2px; }
+  .card-body strong { font-size: 19px; }
+  .card-body span { color: var(--dim); font-size: 14px; }
+  .card-body small { color: var(--accent); font-size: 13px; font-weight: 600; }
+  .row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 8px; padding: 14px 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; }
+  .switch { appearance: none; -webkit-appearance: none; flex: none; margin: 0; width: 46px; height: 28px; border-radius: 14px; background: var(--surface-2); position: relative; transition: background 0.2s; }
+  .switch::after { content: ""; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%; background: var(--dim); transition: transform 0.2s, background 0.2s; }
+  .switch:checked { background: color-mix(in srgb, var(--accent) 40%, transparent); }
+  .switch:checked::after { transform: translateX(18px); background: var(--accent); }
+  .note { color: var(--dim); font-size: 13px; margin: 8px 2px 0; }
+  footer { color: var(--dim); font-size: 13px; margin-top: 28px; }
+
+  /* Overview */
+  .intro { margin: 0 0 8px; }
+  .list { list-style: none; padding: 0; margin: 12px 0 96px; }
+  .list .group { color: var(--accent); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin: 20px 0 4px; }
+  .list .item { display: flex; gap: 12px; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid var(--line); }
+  .list small { display: block; color: var(--dim); font-size: 13px; }
+  .num { flex: none; width: 26px; height: 26px; margin-top: 1px; border-radius: 50%; display: grid; place-items: center; font-size: 13px; color: var(--dim); background: var(--surface-2); }
+  .bottom { position: fixed; left: 0; right: 0; bottom: 0; padding: 24px 16px calc(12px + env(safe-area-inset-bottom)); background: linear-gradient(transparent, var(--bg) 40%); }
+  .primary { display: block; width: 100%; max-width: 448px; margin: 0 auto; padding: 16px; border-radius: 16px; background: var(--accent); color: #111; font-weight: 700; font-size: 18px; }
+
+  /* Player */
+  #player { display: flex; flex-direction: column; min-height: 100dvh; padding-bottom: 0; }
+  .progress { flex: 1; height: 6px; border-radius: 3px; overflow: hidden; background: var(--surface-2); }
+  .progress i { display: block; height: 100%; width: 0; background: var(--accent); transition: width 0.1s linear; }
+  .count { min-width: 40px; text-align: right; font-size: 13px; color: var(--dim); font-variant-numeric: tabular-nums; }
+  .icon-btn.muted .on, .icon-btn:not(.muted) .off { display: none; }
+  .stage { position: relative; margin-top: 8px; border-radius: 20px; background: var(--surface); }
+  .stage svg { display: block; width: 100%; height: auto; max-height: 34vh; }
+  .soon { position: absolute; left: 14px; top: 10px; font-size: 11px; color: var(--dim); }
+  .status { display: flex; align-items: center; gap: 16px; margin: 14px 0 6px; }
+  .ring { position: relative; flex: none; width: 96px; height: 96px; }
+  .ring svg { display: block; transform: rotate(-90deg); }
+  .ring circle { fill: none; stroke-width: 8; }
+  .ring .track { stroke: var(--surface-2); }
+  .ring .fill { stroke: var(--accent); stroke-linecap: round; stroke-dasharray: 339.29; transition: stroke-dashoffset 0.1s linear; }
+  .ring b { position: absolute; inset: 0; display: grid; place-items: center; font-size: 30px; font-variant-numeric: tabular-nums; }
+  .is-prep .ring .fill { stroke: var(--dim); }
+  .phase { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); }
+  .is-prep .phase { color: var(--dim); }
+  .name { font-size: 22px; font-weight: 700; line-height: 1.2; margin: 2px 0; }
+  .en { font-size: 13px; color: var(--dim); }
+  .cues { margin: 6px 0 0; padding-left: 20px; }
+  .cues li { margin: 4px 0; }
+  .avoid { margin: 8px 0 4px; font-size: 14px; color: var(--dim); }
+  .avoid b { color: var(--fg); font-weight: 600; }
+  .next { margin: 4px 0 12px; font-size: 14px; color: var(--dim); }
+  .controls { position: sticky; bottom: 0; margin-top: auto; display: flex; justify-content: space-evenly; align-items: center; padding: 10px 0 calc(14px + env(safe-area-inset-bottom)); background: var(--bg); }
+  .ctrl { width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center; background: var(--surface); }
+  .ctrl.big { width: 78px; height: 78px; background: var(--accent); color: #111; }
+  .ctrl.big svg.i { width: 32px; height: 32px; }
+  .ctrl.big .play, .ctrl.big.paused .pause { display: none; }
+  .ctrl.big.paused .play { display: block; }
+
+  /* Figure */
+  .fig-ground { stroke: var(--line); stroke-width: 2; stroke-linecap: round; }
+  .fig-near, .fig-far, .fig-torso { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+  .fig-near { stroke: var(--fg); stroke-width: 9; }
+  .fig-far { stroke: var(--far); stroke-width: 9; }
+  .fig-torso { stroke: var(--fg); stroke-width: 12; }
+  .fig-head { fill: var(--fg); }
+
+  /* Done */
+  #done { text-align: center; padding-top: 18vh; }
+  .done-mark { width: 88px; height: 88px; margin: 0 auto 16px; border-radius: 50%; display: grid; place-items: center; color: #111; background: var(--accent); }
+  .done-mark svg.i { width: 44px; height: 44px; stroke-width: 3; }
+  #done .primary { margin-top: 32px; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+</svg>
+
+<main id="home" class="screen">
+  <h1>MoveApp</h1>
+  <p class="sub">Mobilność rano i wieczorem. Timer i głos prowadzą Cię przez każde ćwiczenie.</p>
+  <div id="routines"></div>
+  <label class="row"><span>Komunikaty głosowe</span><input id="voice-toggle" type="checkbox" class="switch"></label>
+  <p id="voice-note" class="note" hidden></p>
+  <footer>
+    Na podstawie filmów kanału Elastaboy:
+    <a href="https://youtu.be/_SdJ6kX2vu0" target="_blank" rel="noopener">poranek</a> i
+    <a href="https://youtu.be/3thDsnn6KR4" target="_blank" rel="noopener">wieczór</a>.
+    Ćwicz w komfortowym zakresie, bez bólu.
+  </footer>
+</main>
+
+<main id="overview" class="screen" hidden>
+  <div class="topbar">
+    <button class="icon-btn" data-back aria-label="Wstecz"><svg class="i" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+  </div>
+  <h1 id="ov-title"></h1>
+  <p id="ov-meta" class="sub"></p>
+  <p id="ov-intro" class="intro"></p>
+  <ol id="ov-list" class="list"></ol>
+  <div class="bottom"><button id="btn-start" class="primary">Start</button></div>
+</main>
+
+<main id="player" class="screen" hidden>
+  <div class="topbar">
+    <button class="icon-btn" data-back aria-label="Zakończ"><svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <div class="progress"><i id="pl-bar"></i></div>
+    <span id="pl-count" class="count"></span>
+    <button id="btn-voice" class="icon-btn" aria-label="Głos">
+      <svg class="i on" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>
+      <svg class="i off" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M16 9.5l5 5M21 9.5l-5 5"/></svg>
+    </button>
+  </div>
+  <div class="stage">
+    <svg id="pl-stage" role="img" aria-label="Animacja ćwiczenia"></svg>
+    <span id="pl-soon" class="soon">Animacja w przygotowaniu</span>
+  </div>
+  <div class="status">
+    <div class="ring">
+      <svg viewBox="0 0 120 120" width="96" height="96"><circle class="track" cx="60" cy="60" r="54"/><circle id="pl-ring" class="fill" cx="60" cy="60" r="54"/></svg>
+      <b id="pl-time"></b>
+    </div>
+    <div>
+      <div id="pl-phase" class="phase"></div>
+      <div id="pl-name" class="name"></div>
+      <div id="pl-en" class="en"></div>
+    </div>
+  </div>
+  <ul id="pl-cues" class="cues"></ul>
+  <p id="pl-avoid" class="avoid"></p>
+  <p class="next"><span id="pl-next"></span> · <a id="pl-video" target="_blank" rel="noopener">Zobacz w filmie ↗</a></p>
+  <div class="controls">
+    <button id="btn-prev" class="ctrl" aria-label="Poprzednie"><svg class="i" viewBox="0 0 24 24"><path d="M18 6l-8 6 8 6zM6 6v12"/></svg></button>
+    <button id="btn-play" class="ctrl big" aria-label="Pauza">
+      <svg class="i pause" viewBox="0 0 24 24"><path d="M9 5v14M15 5v14"/></svg>
+      <svg class="i play" viewBox="0 0 24 24"><path d="M7 5l12 7-12 7z"/></svg>
+    </button>
+    <button id="btn-skip" class="ctrl" aria-label="Następne"><svg class="i" viewBox="0 0 24 24"><path d="M6 6l8 6-8 6zM18 6v12"/></svg></button>
+  </div>
+</main>
+
+<main id="done" class="screen" hidden>
+  <div class="done-mark"><svg class="i" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+  <h1 id="done-title"></h1>
+  <p id="done-text" class="sub"></p>
+  <button class="primary" data-back>Wróć</button>
+</main>
+
+<script src="routines.js"></script>
+<script src="figure.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

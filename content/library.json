@@ -1,0 +1,20 @@
+[
+ {
+  "id": "morning",
+  "title": "Wake Up",
+  "mood": "energize",
+  "summary": "Wake your body up in three stages, before the first coffee.",
+  "duration": 464.329,
+  "steps": 11,
+  "build": "012ac6390d49"
+ },
+ {
+  "id": "evening",
+  "title": "Wind Down",
+  "mood": "wind-down",
+  "summary": "Four slow positions to bring your heart rate down before sleep.",
+  "duration": 550.991,
+  "steps": 4,
+  "build": "e3b0042acff2"
+ }
+]

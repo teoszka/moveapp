@@ -1,0 +1,18 @@
+{
+  "id": "evening",
+  "title": "Wind Down",
+  "mood": "wind-down",
+  "summary": "Four slow positions to bring your heart rate down before sleep.",
+  "source": {
+    "creator": "Elastaboy",
+    "title": "Do This for 8 Minutes Before Bed to Wake Up 100% Refreshed",
+    "youtubeId": "3thDsnn6KR4"
+  },
+  "order": 2,
+  "steps": [
+    { "exercise": "relaxed-deep-squat", "work": 120, "breath": "box", "settle": 5, "videoAt": 40 },
+    { "exercise": "butterfly-pulses", "work": 120, "breath": "fold", "settle": 5, "videoAt": 144 },
+    { "exercise": "frog-pose", "work": 120, "breath": "box", "settle": 5, "videoAt": 284 },
+    { "exercise": "childs-pose", "work": 120, "breath": "box", "settle": 5, "videoAt": 455 }
+  ]
+}

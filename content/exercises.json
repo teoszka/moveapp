@@ -1,0 +1,92 @@
+{
+  "knee-hug-rock": {
+    "name": "Knee hug rock",
+    "cue": "Lie on your back, hug your knees, and rock gently side to side.",
+    "description": "Lie on your back (in bed is fine) and pull your knees to your chest. Rock gently side to side. It is a wake-up signal for the spine, not a stretch.",
+    "level": "floor"
+  },
+  "cat-cow": {
+    "name": "Cat-cow",
+    "cue": "On hands and knees, slowly round and arch your spine.",
+    "description": "Hands under shoulders, knees under hips. Alternate rounding your back up and arching it down while you lift your head. Slow, full range.",
+    "level": "floor"
+  },
+  "neck-circles": {
+    "name": "Neck circles",
+    "cue": "Three slow circles each way.",
+    "description": "Controlled neck rotations (CARs). Three slow circles each way; feel every position on the way and never force your head back.",
+    "level": "standing"
+  },
+  "shoulder-circles": {
+    "name": "Shoulder circles",
+    "cue": "Three big circles each way.",
+    "description": "Shoulder CARs. Three circles each way, as wide as you can, keeping your shoulders away from your ears.",
+    "level": "standing"
+  },
+  "hip-circles": {
+    "name": "Hip circles",
+    "cue": "Lift your knee and draw a big circle. Hold a wall if you need to.",
+    "description": "Hip CARs. Stand on one leg, lift the other knee and draw a wide circle: three one way, three the other. Keep your torso still.",
+    "level": "standing"
+  },
+  "ankle-circles": {
+    "name": "Ankle circles",
+    "cue": "Three circles each way, to the end of your range.",
+    "description": "Ankle CARs. Lift one foot and circle the ankle three times each way, slowly, to the end of your range.",
+    "level": "standing"
+  },
+  "deep-squat": {
+    "name": "Deep squat",
+    "cue": "Sink low and stay there. Shift your weight side to side.",
+    "description": "Sink as low as you comfortably can and stay at the bottom, shifting your weight side to side. If your knees complain, go less deep.",
+    "level": "standing"
+  },
+  "worlds-greatest-stretch": {
+    "name": "World's greatest stretch",
+    "cue": "Lunge, hand inside your front foot, then rotate the other arm to the ceiling.",
+    "description": "From a lunge, put the hand on the front-leg side inside your front foot and rotate the other arm up to the ceiling. Keep the back knee under control.",
+    "level": "floor"
+  },
+  "dog-to-cobra": {
+    "name": "Downward dog to cobra",
+    "cue": "Flow between both. Heels down in dog, hips forward in cobra.",
+    "description": "Flow between downward dog and cobra. In dog, press your heels toward the floor; in cobra, push your hips forward and squeeze your glutes. Don't sink into your shoulders.",
+    "level": "floor"
+  },
+  "standing-side-bend": {
+    "name": "Standing side bend",
+    "cue": "One arm overhead, bend to the opposite side.",
+    "description": "Reach one arm overhead and bend to the opposite side. Breathe into the stretched side and don't lean forward.",
+    "level": "standing"
+  },
+  "hinge-to-reach": {
+    "name": "Hinge to reach",
+    "cue": "Hinge from the hips, then stand tall and reach overhead.",
+    "description": "Hinge from the hips like a Romanian deadlift with a flat back, then stand tall and reach both arms overhead. Smooth, with your breath.",
+    "level": "standing"
+  },
+  "relaxed-deep-squat": {
+    "name": "Relaxed deep squat",
+    "cue": "Close your eyes. Don't chase depth, just breathe.",
+    "description": "A long, easy squat with your eyes closed. Don't chase depth or a stretch; the point is to slow down and breathe.",
+    "level": "standing"
+  },
+  "butterfly-pulses": {
+    "name": "Butterfly pulses",
+    "cue": "Soles together, hold your feet. Gently fold forward and come back up.",
+    "description": "Sit with the soles of your feet together and hold them. Fold gently forward breathing in, come back up breathing out. No pulling or bouncing.",
+    "level": "floor"
+  },
+  "frog-pose": {
+    "name": "Frog pose",
+    "cue": "Knees wide, gently rock forward and back. Choose your range.",
+    "description": "On all fours with your knees wide (wider is more intense) and feet in line with the knees or a little wider. Rock gently forward and back. The most intense position of the evening, so choose your range.",
+    "level": "floor"
+  },
+  "childs-pose": {
+    "name": "Child's pose",
+    "cue": "Knees wide, reach forward, forehead down. Let your lower back release.",
+    "description": "Knees wide, feet almost together. Reach your arms far forward and rest your forehead on the floor. Let your lower back release, and come out of it slowly.",
+    "level": "floor"
+  }
+}

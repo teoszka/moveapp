@@ -1,0 +1,4 @@
+{
+  "energize": { "theme": "day", "voice": "energize", "tones": "bright", "mixGainDb": 0, "dimAfter": null, "tail": 2 },
+  "wind-down": { "theme": "night", "voice": "wind-down", "tones": "soft", "mixGainDb": -4, "dimAfter": 5, "tail": 6 }
+}

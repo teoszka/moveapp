@@ -1,0 +1,25 @@
+{
+  "id": "morning",
+  "title": "Wake Up",
+  "mood": "energize",
+  "summary": "Wake your body up in three stages, before the first coffee.",
+  "source": {
+    "creator": "Elastaboy",
+    "title": "5 Minutes Every Morning That Changes How Your Whole Day Feels",
+    "youtubeId": "_SdJ6kX2vu0"
+  },
+  "order": 1,
+  "steps": [
+    { "exercise": "knee-hug-rock", "work": 30, "sides": 1, "videoAt": 198 },
+    { "exercise": "cat-cow", "work": 30, "sides": 1, "videoAt": 214 },
+    { "exercise": "neck-circles", "work": 15, "sides": 1, "videoAt": 267 },
+    { "exercise": "shoulder-circles", "work": 15, "sides": 1, "videoAt": 273 },
+    { "exercise": "hip-circles", "work": 15, "sides": 2, "videoAt": 279 },
+    { "exercise": "ankle-circles", "work": 15, "sides": 2, "videoAt": 288 },
+    { "exercise": "deep-squat", "work": 30, "sides": 1, "videoAt": 341 },
+    { "exercise": "worlds-greatest-stretch", "work": 30, "sides": 2, "videoAt": 359 },
+    { "exercise": "dog-to-cobra", "work": 30, "sides": 1, "videoAt": 379 },
+    { "exercise": "standing-side-bend", "work": 15, "sides": 2, "videoAt": 403 },
+    { "exercise": "hinge-to-reach", "work": 30, "sides": 1, "videoAt": 419 }
+  ]
+}

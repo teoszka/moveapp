@@ -1,0 +1,308 @@
+{
+ "schema": 1,
+ "routine": "morning",
+ "build": "012ac6390d49",
+ "audio": {
+  "src": "session.mp3",
+  "duration": 464.329,
+  "bytes": 5572878
+ },
+ "chapters": [
+  {
+   "step": 0,
+   "exercise": "knee-hug-rock",
+   "start": 0.0,
+   "end": 41.3,
+   "segments": [
+    {
+     "kind": "transition",
+     "start": 0.0,
+     "end": 11.3
+    },
+    {
+     "kind": "work",
+     "start": 11.3,
+     "end": 41.3,
+     "side": 1,
+     "of": 1
+    }
+   ]
+  },
+  {
+   "step": 1,
+   "exercise": "cat-cow",
+   "start": 41.3,
+   "end": 81.2,
+   "segments": [
+    {
+     "kind": "transition",
+     "start": 41.3,
+     "end": 51.2
+    },
+    {
+     "kind": "work",
+     "start": 51.2,
+     "end": 81.2,
+     "side": 1,
+     "of": 1
+    }
+   ]
+  },
+  {
+   "step": 2,
+   "exercise": "neck-circles",
+   "start": 81.2,
+   "end": 106.2,
+   "segments": [
+    {
+     "kind": "transition",
+     "start": 81.2,
+     "end": 91.2
+    },
+    {
+     "kind": "work",
+     "start": 91.2,
+     "end": 106.2,
+     "side": 1,
+     "of": 1
+    }
+   ]
+  },
+  {
+   "step": 3,
+   "exercise": "shoulder-circles",
+   "start": 106.2,
+   "end": 130.6,
+   "segments": [
+    {
+     "kind": "transition",
+     "start": 106.2,
+     "end": 115.6
+    },
+    {
+     "kind": "work",
+     "start": 115.6,
+     "end": 130.6,
+     "side": 1,
+     "of": 1
+    }
+   ]
+  },
+  {
+   "step": 4,
+   "exercise": "hip-circles",
+   "start": 130.6,
+   "end": 174.3,
+   "segments": [
+    {
+     "kind": "transition",
+     "start": 130.6,
+     "end": 141.3
+    },
+    {
+     "kind": "work",
+     "start": 141.3,
+     "end": 156.3,
+     "side": 1,
+     "of": 2
+    },
+    {
+     "kind": "switch",
+     "start": 156.3,
+     "end": 159.3
+    },
+    {
+     "kind": "work",
+     "start": 159.3,
+     "end": 174.3,
+     "side": 2,
+     "of": 2
+    }
+   ]
+  },
+  {
+   "step": 5,
+   "exercise": "ankle-circles",
+   "start": 174.3,
+   "end": 218.2,
+   "segments": [
+    {
+     "kind": "transition",
+     "start": 174.3,
+     "end": 185.2
+    },
+    {
+     "kind": "work",
+     "start": 185.2,
+     "end": 200.2,
+     "side": 1,
+     "of": 2
+    },
+    {
+     "kind": "switch",
+     "start": 200.2,
+     "end": 203.2
+    },
+    {
+     "kind": "work",
+     "start": 203.2,
+     "end": 218.2,
+     "side": 2,
+     "of": 2
+    }
+   ]
+  },
+  {
+   "step": 6,
+   "exercise": "deep-squat",
+   "start": 218.2,
+   "end": 257.4,
+   "segments": [
+    {
+     "kind": "transition",
+     "start": 218.2,
+     "end": 227.4
+    },
+    {
+     "kind": "work",
+     "start": 227.4,
+     "end": 257.4,
+     "side": 1,
+     "of": 1
+    }
+   ]
+  },
+  {
+   "step": 7,
+   "exercise": "worlds-greatest-stretch",
+   "start": 257.4,
+   "end": 333.1,
+   "segments": [
+    {
+     "kind": "transition",
+     "start": 257.4,
+     "end": 270.1
+    },
+    {
+     "kind": "work",
+     "start": 270.1,
+     "end": 300.1,
+     "side": 1,
+     "of": 2
+    },
+    {
+     "kind": "switch",
+     "start": 300.1,
+     "end": 303.1
+    },
+    {
+     "kind": "work",
+     "start": 303.1,
+     "end": 333.1,
+     "side": 2,
+     "of": 2
+    }
+   ]
+  },
+  {
+   "step": 8,
+   "exercise": "dog-to-cobra",
+   "start": 333.1,
+   "end": 374.6,
+   "segments": [
+    {
+     "kind": "transition",
+     "start": 333.1,
+     "end": 344.6
+    },
+    {
+     "kind": "work",
+     "start": 344.6,
+     "end": 374.6,
+     "side": 1,
+     "of": 1
+    }
+   ]
+  },
+  {
+   "step": 9,
+   "exercise": "standing-side-bend",
+   "start": 374.6,
+   "end": 418.5,
+   "segments": [
+    {
+     "kind": "transition",
+     "start": 374.6,
+     "end": 385.5
+    },
+    {
+     "kind": "work",
+     "start": 385.5,
+     "end": 400.5,
+     "side": 1,
+     "of": 2
+    },
+    {
+     "kind": "switch",
+     "start": 400.5,
+     "end": 403.5
+    },
+    {
+     "kind": "work",
+     "start": 403.5,
+     "end": 418.5,
+     "side": 2,
+     "of": 2
+    }
+   ]
+  },
+  {
+   "step": 10,
+   "exercise": "hinge-to-reach",
+   "start": 418.5,
+   "end": 459.3,
+   "segments": [
+    {
+     "kind": "transition",
+     "start": 418.5,
+     "end": 429.3
+    },
+    {
+     "kind": "work",
+     "start": 429.3,
+     "end": 459.3,
+     "side": 1,
+     "of": 1
+    }
+   ]
+  }
+ ],
+ "closing": {
+  "start": 459.3,
+  "end": 464.329
+ },
+ "breath": [],
+ "resume": {
+  "names": [
+   "resume/0.mp3",
+   "resume/1.mp3",
+   "resume/2.mp3",
+   "resume/3.mp3",
+   "resume/4.mp3",
+   "resume/5.mp3",
+   "resume/6.mp3",
+   "resume/7.mp3",
+   "resume/8.mp3",
+   "resume/9.mp3",
+   "resume/10.mp3"
+  ],
+  "remaining": {
+   "5": "../_shared/energize/t005.mp3",
+   "10": "../_shared/energize/t010.mp3",
+   "15": "../_shared/energize/t015.mp3",
+   "20": "../_shared/energize/t020.mp3",
+   "25": "../_shared/energize/t025.mp3",
+   "30": "../_shared/energize/t030.mp3"
+  }
+ }
+}
